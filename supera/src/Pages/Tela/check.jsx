@@ -89,44 +89,39 @@ export default function Tela() {
 
       const d =  totalList.listaTransferencias.filter((e) => {
           const data = pegarDia(e.data_transferencia);
-          // if(dataInicial != "" && dataFinal != "") {
-          //     if (data >= diaInico && data <= diaFim) {
-          //       console.log(e);
-          //       return true;
-          //     }
-
-          //       //if(e.nome_operador_transacao.toLowerCase().includes(dataInicial.toLowerCase())) {
-          //     else return false;
-          // }else 
-          if(dataInicial != "" || dataFinal != "") {
-            if (data >= diaInico || data <= diaFim) {
-              if(cont < 4) {
-                
-                cont++;
-                return true;
-              }
-            }
-            else return false;
-          }
-          
           // todos parametros
-          // if(dataInicial != "" && dataFinal != "" && nomeOperador != "") {
-          //   if (data >= diaInico && data <= diaFim) 
-          //     if(e.nome_operador_transacao.toLowerCase().includes(dataInicial.toLowerCase())) {
-          //       return true;
-          //     }
-          //   else return false;
-          // // apenas datainicial e datafinal
-          // }else if(dataInicial != "" && dataFinal != "") {
-          //   if (data >= diaInico && data <= diaFim) 
-          //     return true;
-          //   else return false;
-          // // apenas datainicial ou datafinal
-          // }else if(dataInicial || "" && dataFinal || "") {
-          //   if (data >= diaInico || data <= diaFim) 
-          //     return true;
-          //   else return false;
-          // }
+      if(dataInicial != "" && dataFinal != "" && nomeOperador != "" &&  e.nome_operador_transacao != null) {
+        if (data >= diaInico && data <= diaFim) 
+          if(e?.nome_operador_transacao.toLowerCase().includes(nomeOperador.toLowerCase())) {
+            total += e.valor;
+            return true;
+          }
+        else return false;
+      // apenas datainicial e datafinal
+      }else if(dataInicial != "" && dataFinal != "") {
+        if (data >= diaInico && data <= diaFim) {
+          total += e.valor;
+          return true;
+        } 
+        else return false;
+      // apenas datainicial ou datafinal
+      }else if(nomeOperador != "" && e.nome_operador_transacao != null) {
+        if(e?.nome_operador_transacao.toLowerCase().includes(nomeOperador.toLowerCase())) {
+          console.log('entrou');
+          total += e.valor;
+          return true;
+        } 
+        else return false;
+      }else if(dataInicial != "" || dataFinal != "") {
+        if (data >= diaInico || data <= diaFim){
+          total += e.valor;
+          return true;
+        } 
+        else return false;
+      }
+      // else {
+      //   document.location.reload();
+      // }
         })
       setList(d);
     }
