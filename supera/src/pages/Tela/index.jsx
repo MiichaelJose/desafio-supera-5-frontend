@@ -59,7 +59,7 @@ export default function Tela() {
   async function preencherListaTotal() {
     const { data } = await api.get('/api/transferencia');
 
-    setLinhas(data.totalLinhas);
+    setLinhas(data.total_linhas);
     setTotalList(data);
     preencherTabelaInicio(data);
     // definir que a lista ja esta preenchida para evitar o erro (map)
@@ -73,7 +73,7 @@ export default function Tela() {
 
     let total = 0;
 
-    data.listaTransferencias.forEach(e => {
+    data.lista_transferencias.forEach(e => {
       total += e.valor;
 
       e.data_transferencia = formatarData(e.data_transferencia);
@@ -118,7 +118,7 @@ export default function Tela() {
     let cont = 0;
     let novaLista = [];
 
-    totalList.listaTransferencias.forEach(e => {
+    totalList.lista_transferencias.forEach(e => {
       if(cont >= ponto && cont < salto) {
         novaLista.push(e);
       }
@@ -137,7 +137,7 @@ export default function Tela() {
     let total = 0;
 
     if(dataInicial != '' || dataFinal != '' || nomeOperador != '') {
-      setList(totalList.listaTransferencias.filter((e) => {
+      setList(totalList.lista_transferencias.filter((e) => {
         const data = pegarData(e.data_transferencia);
 
         if(dataInicial != "" && dataFinal != "" && nomeOperador != "" &&  e.nome_operador_transacao != null) {
@@ -155,7 +155,7 @@ export default function Tela() {
           }
         // apenas datainicial ou datafinal
         }else if(nomeOperador != "" && e.nome_operador_transacao != null) {
-          if(e?.nome_operador_transacao.toLowerCase().includes(nomeOperador.toLowerCase())) {
+          if(e.nome_operador_transacao.toLowerCase().includes(nomeOperador.toLowerCase())) {
             console.log('entrou');
             total += e.valor;
             return true;
@@ -167,6 +167,8 @@ export default function Tela() {
           }
         }
       }));
+    }else {
+      document.location.reload();
     }
     
     setSaldoTotalPeriodo(total.toFixed(2));
@@ -237,13 +239,13 @@ export default function Tela() {
                         <p>{e.data_transferencia}</p>
                       </div>
                       <div>
-                        <p>{e.valor}</p>
+                        <p>R$ {e.valor}</p>
                       </div>
                       <div>
                         <span>{e.tipo}</span>
                       </div>
                       <div>
-                        <p>{e.nome_operador_transacao}</p>
+                        <p>{e.tipo == "ENTRADA" ? e.conta.nome_responsavel : e.nome_operador_transacao}</p>
                       </div>
                     </div>
                   );
