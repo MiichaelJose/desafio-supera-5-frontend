@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './Pages/Tela';
+import App from './pages/Tela';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
